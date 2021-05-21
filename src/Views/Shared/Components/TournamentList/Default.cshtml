@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Proj2Aalst_G3.Models.Domain.Tournament>
+
+<div class="row">
+    @foreach (var tournament in Model)
+    {
+        <div class="col-sm-12 my-2">
+            <div class="card text-white">
+                <img class="card-img" src="~/images/tournamentbanners/@(tournament.Discipline).png" />
+                <div class="card-img-overlay">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <h2 class="card-title text-truncate">@tournament.Name</h2>
+                            <a asp-controller="Tournaments" asp-action="Details" asp-route-id="@tournament.Id" class="btn btn-primary">Details</a>
+                        </div>
+                        <div class="col-lg-2 text-end">
+                            <h5 class="card-text">Max @tournament.Size Teams</h5>
+                            <strong class="card-text text-muted">@(tournament.ScheduledDateStart.HasValue ? tournament.ScheduledDateStart.Value.ToString("dd/MM/yyyy") : "")@(tournament.ScheduledDateEnd.HasValue ? $" - {tournament.ScheduledDateEnd.Value:dd/MM/yyyy}" : "")</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

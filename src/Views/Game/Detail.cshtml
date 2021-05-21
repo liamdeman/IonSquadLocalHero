@@ -1,0 +1,38 @@
+﻿@model Proj2Aalst_G3.Models.Domain.Game
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <h1>Details</h1>
+    <div class="row">
+        <h2>@Model.Name</h2>
+        <hr/>
+    </div>
+    <div class="row mb-2">
+        <div class="col-lg-3 col-md-12">
+            <img src="~/images/gamebanners/@(Model.ToornamentAlias).png" width="228" height="361">
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class="mb-1">
+                <h4>LoginService</h4>
+                <p>@Model.LoginService</p>
+            </div>
+            <div class="mb-1">
+                <h4>ToornamentAlias</h4>
+                <p>@Model.ToornamentAlias</p>
+            </div>
+            <div class="mb-1">
+                <h4>DiscordIconId</h4>
+                <p>@Model.DiscordIconId</p>
+            </div>
+        </div>
+    </div>
+
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Aanpassen</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-secondary">Verwijderen</a> |
+    <a asp-action="Index">Terug naar lijst</a>
+
+</div>

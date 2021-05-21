@@ -1,0 +1,26 @@
+﻿@model Proj2Aalst_G3.Models.ViewModels.RegistrationViewModels.Create
+
+@{
+    ViewData["Title"] = "Verwijderen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="row align-items-center">
+        <div class="col-7">
+            <h3>Weet je zeker dat je dit toernooi wil verwijderen?</h3>
+        </div>
+        <div class="col-5 text-end">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="@ViewData["tournamentId"]"/>
+                <input type="submit" value="Verwijderen" class="btn btn-secondary"/> |
+                <a asp-action="Index">Terug naar lijst</a>
+            </form>
+        </div>
+        <hr/>
+    </div>
+    <div class="row">
+        <h4>@ViewData["tournamentName"]</h4>
+    </div>
+</div>
+

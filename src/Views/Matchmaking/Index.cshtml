@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Proj2Aalst_G3.Services.Matchmaking.LfgUser>
+
+@{
+    ViewData["Title"] = "Matchmaking";
+    var isCurrentUserInMatchmaking = (bool?)ViewData["isUserInMatchmaking"];
+}
+
+<style>
+    .fa-chevron-up {
+        transform: rotate(0deg);
+        transition: transform 0.1s linear;
+    }
+
+    .fa-chevron-up.fa-rotate-180 {
+        transform: rotate(180deg);
+        transition: transform 0.1s linear;
+    }
+</style>
+
+<h1>Matchmaking</h1>
+<h3 class="mb-4">Zoek naar teamgenoten!</h3>
+
+<div class="row mb-4">
+    @if (isCurrentUserInMatchmaking.HasValue)
+    {
+        if (isCurrentUserInMatchmaking.Value)
+        {
+            <div>
+                <button type="button" class="btn btn-danger"
+                        onclick="location.href = '@Url.Action("Unsubscribe", "Matchmaking")'">
+                    <i class="fas fa-minus"></i>
+                    Stoppen met zoeken
+                </button>
+            </div>
+        }
+        else
+        {
+            <div>
+                <button type="button" class="btn btn-primary"
+                        onclick="location.href = '@Url.Action("Subscribe", "Matchmaking")'">
+                    <i class="fas fa-plus"></i>
+                    Zoek naar teamgenoten
+                </button>
+            </div>
+        }
+    }
+    
+    @if (TempData["feedbackMessage"] is not null)
+    {
+        <span class="text-secondary">@TempData["feedbackMessage"]</span>
+    }
+</div>
+
+<div class="row">
+    @foreach (var user in Model)
+    {
+        string guid = "a" + Guid.NewGuid().ToString("N");
+        <div class="px-0" style="width: 19rem; height: auto;">
+            <div class="card bg-primary mx-2 mb-2">
+                <a data-bs-toggle="collapse" href="#@guid" role="button" aria-expanded="False" aria-controls="@guid" class="text-decoration-none text-reset non-draggable" draggable="false" (dragstart)="false;">
+                    <div class="card-body border border-primary bg-body rotate-container">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="/images/IonSquad_logo.png" height="50" width="50" alt="Profile Icon" />
+                            </div>
+                            <div class="col-9">
+                                <span class="text-white fw-lighter">Sinds @user.JoinedOn.ToString("HH:mm").</span>
+                                <h4 class="card-title">@user.Username<span class="fs-5 text-translucent">#@user.Discriminator</span></h4>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-up fa-rotate-180"></i>
+                        <div class="collapse" id="@guid">
+                            <div class="card-body">
+                                <span>Games:</span>
+                                <ul>
+                                    @foreach (var game in user.Games)
+                                    {
+                                        <li>@game.Name</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    const mutationObserver = new MutationObserver(callback);
+
+    (function(document){
+        const containers = document.querySelectorAll('.rotate-container');
+        for (let i = 0; i < containers.length; i++) {
+            mutationObserver
+                .observe(containers[i].querySelector('.collapse'),
+                {
+                     attributes: true, attributeOldValue: true
+                });
+        }
+
+    })(document);
+
+    function callback(mutationsList, observer) {
+        mutationsList.forEach(mut => {
+            if (mut.attributeName === 'class') {
+                const collapseBody = mut.target;
+                const parent = collapseBody.parentElement;
+                if (collapseBody.classList.contains('collapsing')) {
+                    const icon = parent.querySelector('.fa-chevron-up');
+                    if (mut.oldValue.includes('show')) {
+                        icon.classList.add('fa-rotate-180');
+                    } else {
+                        icon.classList.remove('fa-rotate-180');
+                    }
+                }
+            }
+        });
+    }
+</script>

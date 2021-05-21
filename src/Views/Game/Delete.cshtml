@@ -1,0 +1,67 @@
+﻿@model Proj2Aalst_G3.Models.Domain.Game
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container">
+    <h1>Verwijderen</h1>
+    <h2>Bent u zeker dat u deze game wil verwijderen?</h2>
+    <h4 class="mb-4">Game</h4>
+    <div class="col">
+        <div class="row mb-3">
+            <hr/>
+            <div class="row mb-3 mb-md-2 justify-content-between">
+                <div class="col-12 col-md-5 mb-3 mb-md-0">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id"/>
+                    <div>
+                        <img src="~/images/gamebanners/@(Model.ToornamentAlias).png" width="228" height="361">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-5">
+                    <div class="mb-3">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                    </div>
+                    <div>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LoginService)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LoginService)
+                        </dd>
+                    </div>
+                    <div>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ToornamentAlias)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ToornamentAlias)
+                        </dd>
+                    </div>
+                    <div class="mb-3">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DiscordIconId)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.DiscordIconId)
+                        </dd>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id"/>
+        <input type="submit" value="Verwijderen" class="btn btn-secondary"/> |
+        <a asp-action="Index">Terug naar lijst</a>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Registratie bevestigen";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+        <p>
+            @* Op dit ogenblik worden nog geen bevestigingsmails verzonden, gebruik <a href="https://aka.ms/aspaccountconf">de documentatie</a> om dit te configureren. *@
+            Bij het klikken op volgende link wordt de registratie bevestigd: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Klik hier om je registratie te bevestigen</a>
+        </p>
+    }
+    else
+    {
+        <p>
+            Check je mailbox om je registratie te bevestigen.
+        </p>
+    }
+}

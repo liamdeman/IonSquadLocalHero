@@ -1,0 +1,32 @@
+﻿@model Proj2Aalst_G3.Models.ViewModels.GameProfilesViewModel
+@{
+    ViewData["Title"] = "Beheer je games";
+}
+
+
+<div class="container mt-3">
+    <h4>@ViewData["Title"]</h4>
+    @if (Model.Profiles.Values.Distinct().Count() == 1 && Model.Profiles.Values.First() == "")
+    {
+        <div class="fw-bold">Je hebt nog geen games gekoppeld aan je ION Squad-account.</div>
+    }
+    <div>Om een game te koppelen vul je je gebruikersnaam in bij de game(s) van je keuze.</div>
+    <div class="col-md-6 mt-3">
+            <form method="post">
+                @foreach ((var gameName, var userName) in Model.Profiles)
+                {
+                    <div class="row mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text text-dark" id="basic-addon1">@gameName</span>
+                            <input asp-for="Profiles[gameName]" value="@userName" type="text" class="form-control" />
+                        </div>
+                    </div>
+                }
+                <button class="btn btn-primary" type="submit">Wijzig games</button>
+            </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

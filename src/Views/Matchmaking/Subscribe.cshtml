@@ -1,0 +1,19 @@
+﻿@model Proj2Aalst_G3.Models.ViewModels.MatchmakingViewModels.Subscribe
+
+@{
+    ViewData["Title"] = "Zoek Teamgenoten";
+}
+
+<form asp-action="Subscribe">
+    <div class="mb-3">
+        @for (int i = 0; i < Model.Games.Count; i++)
+        {
+            <div class="form-check">
+                <input asp-for="Games[i].Selected" class="form-check-input" type="checkbox"/>
+                <label asp-for="Games[i].Name">@Model.Games[i].Name</label>
+                <input type="hidden" asp-for="Games[i].Id"/>
+            </div>
+        }
+    </div>
+    <input type="submit" value="Inschrijven" class="btn btn-primary"/>
+</form>

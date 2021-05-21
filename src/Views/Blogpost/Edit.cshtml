@@ -1,0 +1,48 @@
+﻿@model Proj2Aalst_G3.Models.Domain.Blogpost
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container mt-3">
+    <form asp-action="Edit" class="col">
+        <div class="row align-items-center">
+            <div class="col-9">
+                <h1>Edit</h1>
+            </div>
+            <div class="col-3 mb-3 text-end">
+                <input type="submit" value="Opslaan" class="btn btn-primary"/> |
+                <a asp-action="Index" class="mx-1">Terug naar lijst</a>
+            </div>
+            <h4>Blogpost</h4>
+            <hr/>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id"/>
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control"/>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="PublicationTime" class="control-label"></label>
+                    <input asp-for="PublicationTime" class="form-control"/>
+                    <span asp-validation-for="PublicationTime" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Text" class="control-label"></label>
+                    <textarea asp-for="Text" class="form-control" rows="7"></textarea>
+                    <span asp-validation-for="Text" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

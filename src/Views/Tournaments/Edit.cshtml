@@ -1,0 +1,476 @@
+@model Proj2Aalst_G3.Models.ViewModels.TournamentViewModels.Edit
+
+@{
+    ViewData["Title"] = ViewData["isEdit"] as bool? is true ? "Toernooi Aanpassen" : "Toernooi Aanmaken";
+    if (Model.ParticipantType != "team")
+    {
+        Model.TeamMinSize = null;
+        Model.TeamMaxSize = null;
+    }
+}
+
+<div class="container mt-3">
+<form asp-action="Edit" class="col">
+<div class="row align-items-center">
+    <div class="col-9">
+        <h1>@(ViewData["Title"] = ViewData["isEdit"] as bool? is true ? "Aanpassen" : "Aanmaken")</h1>
+    </div>
+    <div class="col-3 mb-3 text-end">
+        <input type="submit" value="Opslaan" class="btn btn-primary"/> |
+        <a asp-action="Index" class="mx-1">Terug naar lijst</a>
+    </div>
+    <h4 class="mb-4">Toernooi</h4>
+    <hr/>
+</div>
+
+
+<div class="row mb-3">
+    <h5>Algemene info</h5>
+    <hr/>
+    <div class="row mb-3 mb-md-2 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="@(ViewData["isEdit"] is true ? "" : "required")">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" class="form-control"/>
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="ScheduledDateStart"></label>
+                <input asp-for="ScheduledDateStart" class="form-control" type="date"/>
+                <span asp-validation-for="ScheduledDateStart" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="ScheduledDateEnd"></label>
+                <input asp-for="ScheduledDateEnd" class="form-control" type="date"/>
+                <span asp-validation-for="ScheduledDateEnd" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row-6">
+        <div class="form-check mb-1">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Public"/> @Html.DisplayNameFor(model => model.Public)
+            </label>
+        </div>
+        <div class="form-check mb-1">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Online"/> @Html.DisplayNameFor(model => model.Online)
+            </label>
+        </div>
+        <div class="form-check mb-1">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="MatchReportEnabled"/> @Html.DisplayNameFor(model => model.MatchReportEnabled)
+            </label>
+        </div>
+        <div class="form-check mb-1">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Archived"/> @Html.DisplayNameFor(model => model.Archived)
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <h5>Locatie</h5>
+    <hr/>
+    <div class="row mb-3 mb-md-2 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="Location"></label>
+                <input asp-for="Location" class="form-control"/>
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="Country"></label>
+                <input asp-for="Country" class="form-control"/>
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5">
+            <div class="@(ViewData["isEdit"] is true ? "" : "required")">
+                <label asp-for="Timezone"></label>
+                <select asp-for="Timezone" asp-items="@(ViewData["timezones"] as SelectList)" class="form-select">
+                    <option value="">Select...</option>
+                </select>
+                <span asp-validation-for="ParticipantType" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <h5>Game</h5>
+    <hr/>
+    @if (ViewData["isEdit"] is true)
+    {
+        <div class="row d-flex justify-content-between align-items-md-center">
+            <div class="col-12 col-md-5 mb-3 mb-md-0">
+                <span>@Html.DisplayNameFor(model => model.Discipline): @Html.DisplayFor(model => model.Discipline)</span>
+            </div>
+            <div class="col-12 col-md-5">
+                <span>@Html.DisplayNameFor(model => model.Platforms): @string.Join(", ", Model.Platforms)</span>
+            </div>
+
+            @Html.HiddenFor(m => m.Platforms)
+            @Html.HiddenFor(m => m.Discipline)
+        </div>
+    }
+    else
+    {
+        <div class="row d-flex justify-content-between align-items-md-center">
+            <div class="col-12 col-md-5 mb-3 mb-md-0">
+                <div class="required">
+                    <label asp-for="Discipline"></label>
+                    @*<input asp-for="Discipline" class="form-control" />*@
+                    <select asp-for="Discipline" asp-items="@(ViewData["games"] as SelectList)" class="form-select">
+                        <option value="">Select...</option>
+                    </select>
+                    <span asp-validation-for="Discipline" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="required">
+                    <label asp-for="Platforms"></label>
+                    <select asp-for="Platforms" asp-items="@(ViewData["platforms"] as MultiSelectList)" class="form-select">
+                        <option value="">Select...</option>
+                    </select>
+                    <span asp-validation-for="Platforms" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row mb-3">
+    <h5>Deelnemers</h5>
+    <hr/>
+    <div class="row mb-3 mb-md-2 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            @if (ViewData["isEdit"] is true)
+            {
+                <span>@Html.DisplayNameFor(model => model.ParticipantType): @Html.DisplayFor(model => model.ParticipantType)</span>
+
+                @Html.HiddenFor(m => m.ParticipantType)
+            }
+            else
+            {
+                <div class="required">
+                    <label asp-for="ParticipantType"></label>
+                    <select asp-for="ParticipantType" asp-items="@(ViewData["participantTypes"] as SelectList)" class="form-select" id="participant-type-selectlist">
+                        <option value="">Select...</option>
+                    </select>
+                    <span asp-validation-for="ParticipantType" class="text-danger"></span>
+                </div>
+            }
+        </div>
+        <div class="col-12 col-md-5">
+            <div class="@(ViewData["isEdit"] is true ? "" : "required")">
+                <label asp-for="Size"></label>
+                <input asp-for="Size" class="form-control"/>
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    @if (Model.ParticipantType != "single")
+    {
+        <div class="row d-flex justify-content-between align-items-md-center">
+            <div class="col-12 col-md-5 mb-3 mb-md-0">
+                <div class="team-size-input">
+                    <label asp-for="TeamMinSize"></label>
+                    <input asp-for="TeamMinSize" class="form-control"/>
+                    <span asp-validation-for="TeamMinSize" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="team-size-input">
+                    <label asp-for="TeamMaxSize"></label>
+                    <input asp-for="TeamMaxSize" class="form-control"/>
+                    <span asp-validation-for="TeamMaxSize" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(m => m.TeamMinSize)
+        @Html.HiddenFor(m => m.TeamMaxSize)
+    }
+</div>
+
+<div class="row mb-3 blockedformgroup">
+    <h5>Registratieperiode</h5>
+    <hr/>
+    <div class="row mb-3 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="RegistrationOpeningDatetime"></label>
+                <input asp-for="RegistrationOpeningDatetime" class="form-control" type="datetime-local"/>
+                <span asp-validation-for="RegistrationOpeningDatetime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="RegistrationClosingDatetime"></label>
+                <input asp-for="RegistrationClosingDatetime" class="form-control" type="datetime-local"/>
+                <span asp-validation-for="RegistrationClosingDatetime" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row-6">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="RegistrationEnabled"/> @Html.DisplayNameFor(model => model.RegistrationEnabled)
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <h5>Organisatiedetails</h5>
+    <hr/>
+    <div class="row mb-3 mb-md-2 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="Organization"></label>
+                <input asp-for="Organization" class="form-control"/>
+                <span asp-validation-for="Organization" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="Contact"></label>
+                <input asp-for="Contact" class="form-control"/>
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="Discord"></label>
+                <input asp-for="Discord" class="form-control"/>
+                <span asp-validation-for="Discord" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="Website"></label>
+                <input asp-for="Website" class="form-control"/>
+                <span asp-validation-for="Website" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <h5>Extra info</h5>
+    <hr/>
+    <div class="row mb-3 mb-md-2 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="Rules"></label>
+                <textarea asp-for="Rules" class="form-control"></textarea>
+                <span asp-validation-for="Rules" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="Prize"></label>
+                <textarea asp-for="Prize" class="form-control"></textarea>
+                <span asp-validation-for="Prize" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <h5>Registratiedetails</h5>
+    <hr/>
+    <div class="row mb-3 mb-md-2 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="RegistrationAcceptanceMessage"></label>
+                <input asp-for="RegistrationAcceptanceMessage" class="form-control"/>
+                <span asp-validation-for="RegistrationAcceptanceMessage" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="RegistrationRefusalMessage"></label>
+                <input asp-for="RegistrationRefusalMessage" class="form-control"/>
+                <span asp-validation-for="RegistrationRefusalMessage" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="RegistrationRequestMessage"></label>
+                <input asp-for="RegistrationRequestMessage" class="form-control"/>
+                <span asp-validation-for="RegistrationRequestMessage" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3 blockedformgroup">
+    <h5>Externe registratiedetails</h5>
+    <hr/>
+    <div class="row mb-3 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="RegistrationTermsUrl"></label>
+                <input asp-for="RegistrationTermsUrl" class="form-control"/>
+                <span asp-validation-for="RegistrationTermsUrl" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row-6">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="RegistrationTermsEnabled"/> @Html.DisplayNameFor(model => model.RegistrationTermsEnabled)
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3 blockedformgroup">
+    <h5>Check-in</h5>
+    <hr/>
+    <div class="row mb-3 d-flex justify-content-between align-items-md-center">
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <div>
+                <label asp-for="CheckInParticipantStartDatetime"></label>
+                <input asp-for="CheckInParticipantStartDatetime" class="form-control" type="datetime-local"/>
+                <span asp-validation-for="CheckInParticipantStartDatetime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div>
+                <label asp-for="CheckInParticipantEndDatetime"></label>
+                <input asp-for="CheckInParticipantEndDatetime" class="form-control" type="datetime-local"/>
+                <span asp-validation-for="CheckInParticipantEndDatetime" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row-6">
+        <div class="form-check mb-1">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="CheckInParticipantEnabled"/> @Html.DisplayNameFor(model => model.CheckInParticipantEnabled)
+            </label>
+        </div>
+        <div class="form-check mb-1">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="CheckInEnabled"/> @Html.DisplayNameFor(model => model.CheckInEnabled)
+            </label>
+        </div>
+    </div>
+</div>
+</form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        @*I know it's messy, but it works and js kinda ughhhh to work with :)*@
+        window.onload = onCreatePageLoad();
+
+        function setFormInputEnabled(selector, enabled = true) {
+            const containers = document.querySelectorAll(selector);
+            containers.forEach((container) => {
+                const inputs = container.querySelectorAll('input');
+                inputs.forEach((input) => input.disabled = enabled);
+            });
+        }
+
+        function getSelectListSelectedValue(selectListElement) {
+            return selectListElement.options[selectListElement.selectedIndex].value;
+        }
+
+        function toggleInputForSelectListVal(selectList, enabledValue, inputParentSelector) {
+            const actualValue = getSelectListSelectedValue(selectList);
+            if (enabledValue !== actualValue) {
+                setFormInputEnabled(inputParentSelector);
+            } else {
+                setFormInputEnabled(inputParentSelector, false);
+            }
+        }
+        
+        function onCreatePageLoad() {
+            const list = document.querySelector('#participant-type-selectlist');
+            if (typeof list !== 'undefined' && list !== null) {
+                list.addEventListener('change', function (e) {
+                    toggleInputForSelectListVal(e.target, 'team', '.team-size-input');
+                });
+                toggleInputForSelectListVal(list, 'team', '.team-size-input');
+            }
+            blockFormGroups();
+        }
+
+        function blockFormGroups() {
+            let parents = document.querySelectorAll('.blockedformgroup');
+            for (let i = 0; i < parents.length; i++) {
+                let input = parents[i].querySelector('.form-check-input');
+                if (input.checked) {
+                    let parent = input.closest('.blockedformgroup');
+                    let children = parent.querySelectorAll('.form-control');
+                    for (let i = 0; i < children.length; i++) {
+                        children[i].disabled = false;
+                    }
+                } else {
+                    changeTextboxState(input, true);
+                }
+                input.addEventListener('change', (e) => {
+                    if (e.currentTarget.checked) {
+                        let parent = e.currentTarget.closest('.blockedformgroup');
+                        let children = parent.querySelectorAll('.form-control');
+                        for (let i = 0; i < children.length; i++) {
+                            children[i].disabled = false;
+                        }
+                    } else {
+                        let parent = e.currentTarget.closest('.blockedformgroup');
+                        let children = parent.querySelectorAll('.form-control');
+                        for (let i = 0; i < children.length; i++) {
+                            children[i].disabled = true;
+                        }
+                    }
+                });
+            }
+        }
+
+        function changeTextboxState(parentNode, disabled) {
+            let parent = parentNode.closest('.blockedformgroup');
+            let children = parent.querySelectorAll('.form-control');
+            for (let i = 0; i < children.length; i++) {
+                children[i].disabled = disabled;
+            }
+        }
+    </script>
+}

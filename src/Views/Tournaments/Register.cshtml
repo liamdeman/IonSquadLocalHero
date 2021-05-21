@@ -1,0 +1,74 @@
+﻿@model Proj2Aalst_G3.Models.ViewModels.RegistrationViewModels.Create
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-8">
+            <h3>Weet je zeker dat je voor dit toernooi jezelf wil inschrijven?</h3>
+            <h4>@ViewData["tournamentName"]</h4>
+        </div>
+        @if (ViewData["isSingle"] is true)
+        {
+            <div class="col-4 text-end">
+                <form asp-action="Register">
+                    <input type="hidden" asp-for="Name"/>
+                    <input type="hidden" asp-for="Email"/>
+                    <input type="hidden" asp-for="CustomUserIdentifier"/>
+                    <input type="hidden" asp-for="Type"/>
+                    <input type="submit" value="Inschrijven" class="btn btn-primary"/> |
+                    <a asp-action="Index">Terug naar lijst</a>
+                </form>
+            </div>
+        }
+        <hr/>
+    </div>
+    <div class="row">
+        @if (ViewData["isPosted"] is false && ViewData["isSingle"] is null or false)
+        {
+            <form asp-action="Register">
+                <input type="hidden" asp-for="@ViewData["tournamentId"]"/>
+                <div class="col-12 col-md-5">
+                    <div>
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div>
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div>
+                        <label asp-for="CustomUserIdentifier"></label>
+                        <input asp-for="CustomUserIdentifier" class="form-control"/>
+                        <span asp-validation-for="CustomUserIdentifier" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div>
+                        <label asp-for="Type"></label>
+                        <input asp-for="Type" class="form-control"/>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </div>
+                <input type="submit" value="Inschrijven" class="btn btn-secondary"/> |
+                <a asp-action="Index">Terug naar lijst</a>
+            </form>
+        }
+        else if (ViewData["isSingle"] is true)
+        {
+            // Button moved to top side of page
+        }
+        else
+        {
+            <p>Inschrijving is geslaagd, @Model.CustomUserIdentifier!</p>
+        }
+    </div>
+</div>

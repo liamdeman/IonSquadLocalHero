@@ -1,0 +1,80 @@
+﻿@model Proj2Aalst_G3.Models.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="ms-sm-auto col-12 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle">
+                        <span data-feather="calendar"></span>
+                        This week
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mx-0 my-3">
+                <div class="card text-white bg-dark border-primary" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Nieuwe Spelers</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Met Discord</h6>
+                        <p class="card-text text-end align-text-bottom"><strong class="fs-3">@Model.NewDiscordLinkedUsers</strong> spelers</p>
+                    </div>
+                </div>
+
+                <div class="card text-white bg-dark border-secondary ms-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Nieuwe Spelers</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Zonder Discord</h6>
+                        <p class="card-text text-end align-text-bottom"><strong class="fs-3">@Model.NewSiteUsers</strong> spelers</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Nieuwe Gebruikers</h2>
+            <canvas class="my-4 w-100" id="userChart"></canvas>
+            <h2>Gebruikers per Spel</h2>
+            <div class="col-6"><canvas class="my-4 w-100" id="gameChart"></canvas></div>
+
+            <h2>Pagina's bezocht</h2>
+            <div class="table-responsive">
+                <table class="table table-dark table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Pagina</th>
+                            <th>Subpagina</th>
+                            <th>Keren bekeken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ((var key, int value) in Model.PageStatistics)
+                    {
+                        <tr>
+                            <td>@key.Item1</td>
+                            <td>@key.Item2</td>
+                            <td>@value</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    var userChart = (ChartJSCore.Models.Chart) ViewData["userChart"];
+    var gameChart = (ChartJSCore.Models.Chart) ViewData["gameChart"];
+}
+@section Scripts
+{
+    <script>
+        @Html.Raw(userChart.CreateChartCode("userChart"));
+
+
+        @Html.Raw(gameChart.CreateChartCode("gameChart"));
+    </script>
+}

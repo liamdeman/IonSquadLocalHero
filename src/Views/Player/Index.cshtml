@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Proj2Aalst_G3.Models.Domain.ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+   <div class="container mt-3">
+       <h1>Zoekresultaten</h1>
+       <div class="row d-flex justify-content-around">
+           @foreach (var user in Model)
+           {
+           <div class="col-lg-5 my-2 border-white border">
+               <div class="row py-2">
+                   <div class="col-lg-4 d-flex justify-content-lg-end align-items-lg-center">
+                       <img src="https://pbs.twimg.com/profile_images/1333147898213707779/crlU1woK_400x400.jpg" alt="Profile Picture" style="border-radius: 50%; width: 100%" />
+                   </div>
+                   <div class="col-lg-8 text-start d-flex align-items-start flex-column">
+                       <div class="row">
+                           <h3 class="title">@user.UserName</h3>
+                           @if (user.DiscordUserName is not null)
+                           {
+                               <h5 class="subtitle">@user.DiscordUserName#@user.DiscordDiscriminator</h5>
+                           }
+                       </div>
+                       <div class="row-auto mt-auto">
+                           <a asp-controller="Player" asp-action="Detail" asp-route-id="@user.UserName" class="btn btn-primary">Bekijk profiel</a>
+                       </div>
+                   </div>
+               </div>
+           </div>
+            }
+       </div>
+   </div>
+
+
+

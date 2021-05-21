@@ -1,0 +1,47 @@
+﻿@model Proj2Aalst_G3.Models.Domain.Blogpost
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container">
+
+    <div class="row align-items-center">
+        <div class="col-9">
+            <h1>Delete</h1>
+        </div>
+        <div class="col-3 mb-3 text-end">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id"/>
+                <input type="submit" value="Verwijderen" class="btn btn-secondary"/> |
+                <a asp-action="Index">Terug naar lijst</a>
+            </form>
+        </div>
+        <h3>Bent u zeker dat u deze blogpost wil verwijderen?</h3>
+        <hr/>
+    </div>
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PublicationTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PublicationTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Text)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Text)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+

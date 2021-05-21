@@ -1,0 +1,62 @@
+﻿body {
+    background-image: url("../../images/Background.jpg");
+    background-size: cover;
+    -moz-background-size: cover; /* Mozilla firefox */
+    -webkit-background-size: cover; /* Safari */
+    -o-background-size: cover; /* Opera browser*/    
+    color: white;
+}
+
+.bg-white {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.navbar-brand {
+    color: rgba(255, 255, 255, .9);
+}
+
+.image img {
+    transition: all 1s ease-in-out
+}
+
+.image:hover img {
+    transform: scale(1.1, 1.1);
+    cursor: pointer
+}
+
+.title {
+    font-size: xx-large;
+}
+
+.subtitle {
+    font-weight: lighter;
+}
+
+.greyText {
+    color: dimgrey;
+    font-weight: bold;
+}
+
+.tournamentBannerLeagueOfLegends {
+    background-image: url("../../images/tournamentbanners/leagueoflegends.png");
+    background-size: cover;
+    -moz-background-size: cover; /* Mozilla firefox */
+    -webkit-background-size: cover; /* Safari */
+    -o-background-size: cover; /* Opera browser*/
+}
+
+.tournamentBannerRocketLeague {
+    background-image: url("../../images/tournamentbanners/rocketleague.png");
+    background-size: cover;
+    -moz-background-size: cover; /* Mozilla firefox */
+    -webkit-background-size: cover; /* Safari */
+    -o-background-size: cover; /* Opera browser*/
+}
+
+.tournamentBannerFortnite {
+    background-image: url("../../images/tournamentbanners/fortnite.png");
+    background-size: cover;
+    -moz-background-size: cover; /* Mozilla firefox */
+    -webkit-background-size: cover; /* Safari */
+    -o-background-size: cover; /* Opera browser*/
+}

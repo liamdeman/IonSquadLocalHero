@@ -1,0 +1,53 @@
+﻿@model Proj2Aalst_G3.Models.Domain.Game
+
+@{
+    ViewData["Title"] = "Game Aanpassen";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <h1>Aanpassen</h1>
+    <h4 class="mb-4">Game</h4>
+    <form asp-action="Edit" class="col">
+        <div class="row mb-3">
+            <hr/>
+            <div class="row mb-3 mb-md-2 justify-content-between">
+                <div class="col-12 col-md-5 mb-3 mb-md-0">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div>
+                        <img src="~/images/gamebanners/@(Model.ToornamentAlias).png" width="228" height="361">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-5">
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control"></input>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="LoginService" class="control-label"></label>
+                        <input asp-for="LoginService" class="form-control"></input>
+                        <span asp-validation-for="LoginService" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ToornamentAlias" class="control-label"></label>
+                        <input asp-for="ToornamentAlias" class="form-control"></input>
+                        <span asp-validation-for="ToornamentAlias" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="DiscordIconId" class="control-label"></label>
+                        <input asp-for="DiscordIconId" class="form-control"></input>
+                        <span asp-validation-for="DiscordIconId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 form-group">
+            <input type="submit" value="Opslaan" class="btn btn-primary"/> |
+            <a asp-action="Index" class="mx-1">Terug naar lijst</a>
+        </div>
+    </form>
+</div>

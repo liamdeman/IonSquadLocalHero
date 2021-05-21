@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Proj2Aalst_G3.Models.Domain
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Player" asp-action="Detail" asp-route-id="@User.Identity.Name">@User.Identity.Name</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link">Afmelden</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link mr-1" asp-area="Identity" asp-page="/Account/Register">Registreren</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Inloggen</a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,356 @@
+﻿@model Proj2Aalst_G3.Models.ViewModels.TournamentViewModels.Detail
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3 align-items-center">
+<div class="row">
+    <div class="col-7">
+        <h2>@Model.Name</h2>
+        <div>
+            @if (TempData["updateMessage"] is not null)
+            {
+                <p>@TempData["updateMessage"]</p>
+            }
+        </div>
+    </div>
+
+    <div class="col-5 text-end">
+        @if (User.IsInRole("admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Aanpassen</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-secondary">Verwijderen</a>
+        }
+        <a asp-action="Register" asp-route-id="@Model.Id" class="btn btn-primary">Inschrijven</a> |
+        <a asp-action="Index">Terug naar lijst</a>
+    </div>
+    <hr/>
+</div>
+
+<div class="row">
+    <h5>Algemene info</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+        </div>
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Online)</dt>
+            <dd>@Html.DisplayFor(model => model.Online)</dd>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.ScheduledDateStart)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.ScheduledDateStart)</dd>
+            }
+        </div>
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.ScheduledDateEnd)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.ScheduledDateEnd)</dd>
+            }
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.MatchReportEnabled)</dt>
+            <dd>@Html.DisplayFor(model => model.MatchReportEnabled)</dd>
+        </div>
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Archived)</dt>
+            <dd>@Html.DisplayFor(model => model.Archived)</dd>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h5>Locatie</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Location)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.Location)</dd>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h5>Game</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.Discipline)</dt>
+                @if (Model.Discipline == null)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.Discipline)</dd>
+                }
+            </div>
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.Platforms)</dt>
+                @if (Model.Platforms == null)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.Platforms)</dd>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h5>Deelnemers</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.ParticipantType)</dt>
+                @if (Model.ParticipantType == null)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.ParticipantType)</dd>
+                }
+            </div>
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.Size)</dt>
+                @if (Model.Size == 0)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.Size)</dd>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.RegistrationEnabled)
+{
+    <div class="row">
+        <h5>Registratieperiode</h5>
+        <hr/>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.RegistrationOpeningDatetime)</dt>
+                @if (Model.ScheduledDateStart == null)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.RegistrationOpeningDatetime)</dd>
+                }
+            </div>
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.RegistrationClosingDatetime)</dt>
+                @if (Model.ScheduledDateStart == null)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.RegistrationClosingDatetime)</dd>
+                }
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.RegistrationEnabled)</dt>
+                <dd>@Html.DisplayFor(model => model.RegistrationEnabled)</dd>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <h5>Organisatiedetails</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Organization)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.Organization)</dd>
+            }
+        </div>
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Contact)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.Contact)</dd>
+            }
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.RegistrationEnabled)</dt>
+            <dd>@Html.DisplayFor(model => model.RegistrationEnabled)</dd>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h5>Extra info</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.Description)</dd>
+            }
+        </div>
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Rules)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.Rules)</dd>
+            }
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.Prize)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.Prize)</dd>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <h5>Registratiedetails</h5>
+    <hr/>
+    <div class="row mb-2">
+        <div class="col-12 col-md-6">
+            <dt>@Html.DisplayNameFor(model => model.RegistrationRequestMessage)</dt>
+            @if (Model.ScheduledDateStart == null)
+            {
+                <span>/</span>
+            }
+            else
+            {
+                <dd>@Html.DisplayFor(model => model.RegistrationRequestMessage)</dd>
+            }
+        </div>
+    </div>
+</div>
+
+@if (Model.RegistrationTermsEnabled)
+{
+    <div class="row">
+        <h5>Extra Registratiedetails</h5>
+        <hr/>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.RegistrationTermsUrl)</dt>
+                @if (Model.ScheduledDateStart == null)
+                {
+                    <span>/</span>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.RegistrationTermsUrl)</dd>
+                }
+            </div>
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.RegistrationTermsEnabled)</dt>
+                <dd>@Html.DisplayFor(model => model.RegistrationTermsEnabled)</dd>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.CheckInParticipantEnabled
+     && Model.CheckInParticipantStartDatetime.HasValue
+     && Model.CheckInParticipantEndDatetime.HasValue)
+{
+    <div class="row">
+
+        <h5>Check-in</h5>
+        <hr/>
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.CheckInParticipantStartDatetime)</dt>
+                <dd>@Html.DisplayFor(model => model.CheckInParticipantStartDatetime)</dd>
+            </div>
+            <div class="col-12 col-md-6">
+                <dt>@Html.DisplayNameFor(model => model.CheckInParticipantEndDatetime)</dt>
+                <dd>@Html.DisplayFor(model => model.CheckInParticipantEndDatetime)</dd>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @if (!Model.Registrations.Any())
+    {
+        <h3>Er zijn nog geen registraties voor dit toernament.</h3>
+    }
+    else
+    {
+        <h3>Er zijn @(Model.Registrations?.Count() ?? 0) registraties:</h3>
+        foreach (var registration in Model.Registrations)
+        {
+            <div>
+                <span>@registration.Name | @registration.Email</span>
+            </div>
+        }
+    }
+</div>
+</div>

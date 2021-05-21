@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Games";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container text-center">
+    @*text *@
+    <div class="mb-4">
+        <h2 class="mb-1">
+            We bieden momenteel communityactiviteiten aan voor de volgende games
+        </h2>
+        @*<div class="mb-1">
+            Staat je favoriete game hier niet tussen ?
+        </div>
+        <div class="mb-1">
+            Todo: actie aan link verbinden 
+            Je kan <a class="link-primary" asp - action=""> hier</a > een nieuwe game aanvragen voor ons om toe te voegen!
+        </div>*@
+        <div class="mb-1">
+            Maar je kan zelfs voor games die niet in deze lijst staan teamgenoten zoeken. Dit kan in onze Discord, of op onze <a class="link-primary" asp-controller="Matchmaking" asp-action="Index">Matchmaker</a > !
+        </div>
+    </div>
+    @*images *@
+    @await Component.InvokeAsync("GameList")
+</div>
+
